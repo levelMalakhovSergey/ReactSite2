@@ -4,8 +4,7 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 const PostForm = ({create}) => {
     const [post, setPost] = useState({title:"", description:""});
-
-
+ let isDisabled = {disabled:false};
   const addNewPost = (e) => {
     e.preventDefault()
     const newPost= {
@@ -15,15 +14,29 @@ const PostForm = ({create}) => {
     setPost({title:"", description:""})
   };
     return (
-        
             <form>
-        <MyInput
-          value={post.title}
-          type="text"
-          placeholder="Title"
-          onChange={(e) => setPost(  {...post,title:e.target.value})}
-        ></MyInput>
-
+              {
+                post.title.length<5
+                ?
+                <MyInput
+                value={post.title}
+                type="text"
+                placeholder="Title"
+                onChange={(e) => setPost(  {...post,title:e.target.value})}
+              ></MyInput>
+                : 
+                  <div>
+                  <MyInput
+                value={post.title}
+                type="text"
+                placeholder="Title"
+                onChange={(e) => setPost(  {...post,title:e.target.value})}
+              ></MyInput>
+              <h4>Title cant't be longer then 20 chars</h4>
+              {isDisabled.disabled=true}
+              </div>
+              
+              }
         <MyInput
           value={post.description}
           type="text"
@@ -31,7 +44,7 @@ const PostForm = ({create}) => {
           onChange={(e) => setPost({...post, description:e.target.value})}>
 
           </MyInput>
-        <MyButton onClick={addNewPost}>Create post</MyButton>
+        <MyButton {...isDisabled} onClick={addNewPost}>Create post</MyButton>
       </form>
         
     );

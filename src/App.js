@@ -26,7 +26,8 @@ function App() {
   return (
     <div className="App">
       <PostForm create = {createPost}/>
-      {posts.length !==0
+      {
+            posts.length !==0
             ? <PostList remove = {removePost} posts={posts} title="Post List 1" />
             : <h1 style={{textAlign : "center"}}>Post List is empty </h1>
       }
