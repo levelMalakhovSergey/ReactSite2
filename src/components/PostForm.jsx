@@ -44,7 +44,7 @@ const PostForm = ({create}) => {
           onChange={(e) => setPost({...post, description:e.target.value})}>
 
           </MyInput>
-        <MyButton {...isDisabled} onClick={addNewPost}>Create post</MyButton>
+        <MyButton {...isDisabled}  onClick={addNewPost}>Create post</MyButton>
       </form>
         
     );
