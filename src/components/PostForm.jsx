@@ -16,7 +16,7 @@ const PostForm = ({create}) => {
     return (
             <form>
               {
-                post.title.length<5
+                post.title.length<10
                 ?
                 <MyInput
                 value={post.title}
@@ -32,7 +32,7 @@ const PostForm = ({create}) => {
                 placeholder="Title"
                 onChange={(e) => setPost(  {...post,title:e.target.value})}
               ></MyInput>
-              <h4>Title cant't be longer then 20 chars</h4>
+              <h4>Title cant't be longer then 10 chars</h4>
               {isDisabled.disabled=true}
               </div>
               
