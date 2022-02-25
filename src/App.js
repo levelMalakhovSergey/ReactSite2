@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import { TransitionGroup } from "react-transition-group";
+import PostService from "./API/PostService";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostItem from "./components/PostItem";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
+import Loader from "./components/UI/loader/Loader";
 import MyModal from "./components/UI/MyModal/MyModal";
 import MySelect from "./components/UI/select/MySelect";
 
@@ -16,6 +18,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
+  const [isPostsLoading, setPostsLoading] = useState(false);
 
   // const SortedPosts = getSortedPosts();
   const SortedPosts = useMemo(() => {
@@ -36,8 +39,10 @@ function App() {
 
 
   async function fetchPosts() {
-    let response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    setPosts(response.data)
+    setPostsLoading(true)
+    let posts = await PostService.getAll()
+    setPosts(posts)
+    setPostsLoading(false)
   }
 
   useEffect( () => {
@@ -69,16 +74,20 @@ function App() {
 
       <hr style={{ margin: "15px" }}></hr>
       <PostFilter filter={filter} setFilter={setFilter} />
-      
-        {sortedAndSearchedPosts.length !== 0 ? (
-            <PostList
-              remove={removePost}
-              posts={sortedAndSearchedPosts}
-              title="Post List 1"
-            />
-          ) : (
-            <h1 style={{ textAlign: "center" }}>Post List is empty </h1>
-          )}
+      {
+        isPostsLoading
+        ? <div style={{display:"flex" , justifyContent: 'center', alignItems:'center', marginTop: "30px"}}> <Loader/></div>
+        :sortedAndSearchedPosts.length !== 0 ? (
+          <PostList
+            remove={removePost}
+            posts={sortedAndSearchedPosts}
+            title="Post List 1"
+          />
+        ) : (
+          <h1 style={{ textAlign: "center" }}>Post List is empty </h1>
+        )
+      }
+        
       
     </div>
   );
