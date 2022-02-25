@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import { TransitionGroup } from "react-transition-group";
 import PostService from "./API/PostService";
+import { useFetching } from "./components/hooks/useFetching";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostItem from "./components/PostItem";
@@ -11,7 +12,7 @@ import MyInput from "./components/UI/input/MyInput";
 import Loader from "./components/UI/loader/Loader";
 import MyModal from "./components/UI/MyModal/MyModal";
 import MySelect from "./components/UI/select/MySelect";
-
+import pages, { getPagesArray, GetPagesCount } from "./utils/pages";
 import "./styles/App.css";
 
 function App() {
@@ -19,7 +20,24 @@ function App() {
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
   const [isPostsLoading, setPostsLoading] = useState(false);
+  const [totalCount,setTotalCount] = useState(0)
+  const [limit,setLimit] = useState(10)
+  const [totalPages,setTotalPages] = useState(0)
+  const [page,setPage] = useState(1)
+  let pagesArray = getPagesArray(totalPages)
+  const [fetchPosts, isLoading, postError] = useFetching( async ()=> {
+    setPostsLoading(true)
+    let response = await PostService.getAll(limit,page)
+    setPosts(response.data)
+    setTotalCount(response.headers['x-total-count'])
+    setTotalPages(GetPagesCount(totalCount,limit))
+    setPostsLoading(false)
+   })
+  
 
+
+
+   
   // const SortedPosts = getSortedPosts();
   const SortedPosts = useMemo(() => {
     console.log("function worked");
@@ -37,17 +55,9 @@ function App() {
     );
   }, [filter.query, SortedPosts]);
 
-
-  async function fetchPosts() {
-    setPostsLoading(true)
-    let posts = await PostService.getAll()
-    setPosts(posts)
-    setPostsLoading(false)
-  }
-
   useEffect( () => {
       fetchPosts()
-  }, [])
+  }, [page])
 
 
 
@@ -62,18 +72,20 @@ function App() {
 
   return (
     <div className="App">
-      {/* <MyButton onClick={fetchPosts}> GET POSTS</MyButton> */}
       <MyButton style={{ marginTop: "30px" }} onClick={() => setModal(true)}>
-        {" "}
         Add Post
       </MyButton>
       <MyModal visible={modal} setVisible={setModal}>
-        {" "}
+
         <PostForm create={createPost} />{" "}
       </MyModal>
 
       <hr style={{ margin: "15px" }}></hr>
       <PostFilter filter={filter} setFilter={setFilter} />
+      {
+        postError &&
+         <h1>Произошла ошибка</h1>
+      }
       {
         isPostsLoading
         ? <div style={{display:"flex" , justifyContent: 'center', alignItems:'center', marginTop: "30px"}}> <Loader/></div>
@@ -87,6 +99,13 @@ function App() {
           <h1 style={{ textAlign: "center" }}>Post List is empty </h1>
         )
       }
+      {
+      pagesArray.map(p => 
+        <MyButton
+        onClick={() => setPage(p)}
+         key={p}
+        style={page===p ? {margin:"10px" , border: "2px solid yellow"} : {margin:"10px"}}>{p}</MyButton>
+      )}
         
       
     </div>
