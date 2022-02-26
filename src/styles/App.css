@@ -7,13 +7,14 @@
 
 #root {
     display: flex;
+    flex-direction: column;
     justify-content: center;
    
 }
  
-.App {
+.Posts {
     width: 800px;
-    
+    margin:0 auto;
 }
 .post {
     display: flex;
@@ -23,8 +24,18 @@
     justify-content: space-between;
     align-items: center;
 }
+.post__btns {
+    display: flex;
+}
+  .commPool{
+      width: 100%;
+      min-height: 50px;
+      border: 2px solid grey;
+      box-sizing: border-box;
+      margin-top: 15px;
+      display: flex;
 
-  
+  }
   .post-enter {
     transform: translateX(-350px);
   }
@@ -39,4 +50,21 @@
     transform: translateX(-350px);
     transition: all 500ms ease-in;
   }
+  .navbar {
+      height: 50px;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      font-size: 16px;
+      color: black;
+      background: darkturquoise;
+  }
+  .navbar__links {
+      margin-left:auto;
+      padding: 0 15px;
+  }
+
+
   
