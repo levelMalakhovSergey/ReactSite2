@@ -6,11 +6,20 @@ import {AuthContext} from "../context";
 
 
 const Login = () => {
-    const {isAuth, setIsAuth} = useContext(AuthContext )
+    const {isAuth, setIsAuth, loginnedUsers, setUser } = useContext(AuthContext )
     const login = event => {
         event.preventDefault();
-        setIsAuth(true)
-        localStorage.setItem('auth', 'true')
+        console.log(event)
+        loginnedUsers.map(user => {
+            if (user.login === event.target[0].value)
+            {
+                if (user.password === event.target[1].value)
+                {
+                    setIsAuth(true)
+                    localStorage.setItem('auth', 'true')
+                }
+            }
+        })
     }
 
     return (
@@ -21,6 +30,7 @@ const Login = () => {
                 <MyInput type="password" placeholder='password'/>
                 <MyButton >Войти</MyButton>
             </form>
+            <a href='/registration'>Зарегестрироваться</a>
         </div>
     );
 };

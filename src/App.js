@@ -14,8 +14,10 @@ import {AuthContext} from "./context";
 
 function App() {
     const [isAuth,setIsAuth] = useState(false)
+    const [loginnedUsers, setUser] = useState([])
     const [isLoading,setIsLoading] = useState(true)
     useEffect(() => {
+        setUser([{login:'admin', password:'12345'}])
         if (localStorage.getItem('auth'))
         {
             setIsAuth(true)
@@ -25,7 +27,7 @@ function App() {
     return (
 
         <AuthContext.Provider  value={{
-            isAuth, setIsAuth,isLoading
+            isAuth, setIsAuth,isLoading, loginnedUsers,setUser
         }}>
             <BrowserRouter>
                 <Navbar/>

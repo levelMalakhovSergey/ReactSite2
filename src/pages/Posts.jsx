@@ -43,7 +43,7 @@ function Posts() {
         setPostsLoading(true)
         let response = await PostService.getAll(limit, page)
         setPosts([...posts, ...response.data])
-        setTotalCount(response.headers['x-total-count'])
+        setTotalCou nt(response.headers['x-total-count'])
         setTotalPages(GetPagesCount(totalCount, limit))
         setPostsLoading(false)
     })
@@ -69,15 +69,17 @@ function Posts() {
         if(isPostsLoading) return;
         if(observer.current) observer.current.disconnect();
 
-        var callback = function(entries, observer) {
-            if (entries[0].isIntersecting && page< totalPages) {
+        let callback = function(entries, observer) {
+            if (entries[0].isIntersecting && page< 10) {
                 console.log(entries)
+
                 setPage(page+1)
             }
         };
         observer.current = new IntersectionObserver(callback);
         observer.current.observe(lastElement.current)
-    }, [isPostsLoading])
+    }, [isLoading,isPostsLoading])
+
     useEffect(() => {
         fetchPosts()
     }, [page])
@@ -114,27 +116,26 @@ function Posts() {
                 posts={sortedAndSearchedPosts}
                 title="Post List"
             />
-            <div ref={lastElement} style={{height: "20px", background: 'red', width: "800px"}}></div>
             {
                 isPostsLoading &&
                 <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', marginTop: "30px"}}>
                     <Loader/>
                 </div>
             }
+            <div ref={lastElement} style={{height: "20px", background: 'red', width: "800px"}}></div>
+
 
 
             {
                 pagesArray.map(p =>
-                    <MyButton
-                        onClick={() => setPage(p)}
-                        key={p}
-                        style={page === p ? {
-                            margin: "10px",
-                            border: "2px solid yellow"
-                        } : {margin: "10px"}}>{p}</MyButton>
+                        <MyButton
+                            onClick={() => setPage(p)}
+                            key={p}
+                            style={page === p ? {
+                                margin: "10px",
+                                border: "2px solid yellow"
+                            } : {margin: "10px"}}>{p}</MyButton>
                 )}
-
-
         </div>
     );
 }
