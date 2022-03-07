@@ -43,7 +43,7 @@ function Posts() {
         setPostsLoading(true)
         let response = await PostService.getAll(limit, page)
         setPosts([...posts, ...response.data])
-        setTotalCou nt(response.headers['x-total-count'])
+        setTotalCount(response.headers['x-total-count'])
         setTotalPages(GetPagesCount(totalCount, limit))
         setPostsLoading(false)
     })
@@ -126,16 +126,16 @@ function Posts() {
 
 
 
-            {
-                pagesArray.map(p =>
-                        <MyButton
-                            onClick={() => setPage(p)}
-                            key={p}
-                            style={page === p ? {
-                                margin: "10px",
-                                border: "2px solid yellow"
-                            } : {margin: "10px"}}>{p}</MyButton>
-                )}
+            {/*{*/}
+            {/*    pagesArray.map(p =>*/}
+            {/*            <MyButton*/}
+            {/*                onClick={() => setPage(p)}*/}
+            {/*                key={p}*/}
+            {/*                style={page === p ? {*/}
+            {/*                    margin: "10px",*/}
+            {/*                    border: "2px solid yellow"*/}
+            {/*                } : {margin: "10px"}}>{p}</MyButton>*/}
+            {/*    )}*/}
         </div>
     );
 }

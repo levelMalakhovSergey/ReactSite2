@@ -12,6 +12,7 @@ import Error from "./pages/Error";
 import AppRouter from "./components/AppRouter";
 import {AuthContext} from "./context";
 
+
 function App() {
     const [isAuth,setIsAuth] = useState(false)
     const [loginnedUsers, setUser] = useState([])
@@ -25,6 +26,7 @@ function App() {
         setIsLoading(false)
     },[])
     return (
+
 
         <AuthContext.Provider  value={{
             isAuth, setIsAuth,isLoading, loginnedUsers,setUser

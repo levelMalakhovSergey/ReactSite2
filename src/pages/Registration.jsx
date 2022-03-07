@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import {AuthContext} from "../context";
+import {render} from "react-dom";
 
 
 
@@ -15,7 +16,8 @@ const Registration = () => {
         setPassword('')
         setLogin('')
         console.log(loginnedUsers)
-        //document.location.href = "/login";
+
+      //  document.location.href = "/login";
     }
     return (
         <div style={{width:"800px" , margin:"0 auto"}}>
@@ -23,7 +25,7 @@ const Registration = () => {
 
                 <MyInput type="text" onChange={e => setLogin(e.target.value)} placeholder='login' value={login}/>
                 <MyInput type="password" onChange={e => setPassword(e.target.value)} placeholder='password' value={password}/>
-                <MyButton onClick={regUser}>Зарегестрироваться</MyButton>
+                <MyButton onClick={() => regUser()}>Зарегестрироваться</MyButton>
 
         </div>
     );

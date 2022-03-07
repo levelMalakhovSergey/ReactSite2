@@ -6,6 +6,7 @@ import {AuthContext} from "../context";
 
 
 const Login = () => {
+    const [text, setText] = useState('')
     const {isAuth, setIsAuth, loginnedUsers, setUser } = useContext(AuthContext )
     const login = event => {
         event.preventDefault();
@@ -19,16 +20,22 @@ const Login = () => {
                     localStorage.setItem('auth', 'true')
                 }
             }
+
         })
+        event.target[0].value="";
+        event.target[1].value="";
+        setText("Uncorrect data")
     }
 
     return (
         <div style={{width:"800px" , margin:"0 auto"}}>
             <h1>Page for login</h1>
+            <h3>{text}</h3>
             <form onSubmit={login}>
                 <MyInput type="text" placeholder='login'/>
                 <MyInput type="password" placeholder='password'/>
                 <MyButton >Войти</MyButton>
+
             </form>
             <a href='/registration'>Зарегестрироваться</a>
         </div>

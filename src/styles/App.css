@@ -36,6 +36,12 @@
       display: flex;
 
   }
+  .navigationTablePanel
+  {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
   .post-enter {
     transform: translateX(-350px);
   }
@@ -55,15 +61,16 @@
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 0 10px;
       font-size: 16px;
       color: black;
       background: darkturquoise;
   }
-  .navbar__links {
-      margin-left:auto;
+  .navbar__links a {
+      width: 50px;
       padding: 0 15px;
+
   }
 
 
