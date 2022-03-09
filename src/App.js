@@ -15,10 +15,9 @@ import {AuthContext} from "./context";
 
 function App() {
     const [isAuth,setIsAuth] = useState(false)
-    const [loginnedUsers, setUser] = useState([])
+    const [loginnedUsers, setUser] = useState([{login:'admin', password:'12345'}])
     const [isLoading,setIsLoading] = useState(true)
     useEffect(() => {
-        setUser([{login:'admin', password:'12345'}])
         if (localStorage.getItem('auth'))
         {
             setIsAuth(true)

@@ -10,14 +10,17 @@ import {render} from "react-dom";
 const Registration = () => {
     const [login,setLogin]= useState('')
     const [password,setPassword]= useState('')
-    const {loginnedUsers, setUser } = useContext(AuthContext )
+    const {isAuth, setIsAuth, loginnedUsers, setUser } = useContext(AuthContext )
     const  regUser =  event => {
-        setUser([...loginnedUsers, {login: login , password: password}])
+        let temp= [...loginnedUsers, {login: login , password: password}];
+        setUser(temp)
         setPassword('')
         setLogin('')
+        //  setIsAuth(true)
+        // localStorage.setItem('auth', 'true')
         console.log(loginnedUsers)
 
-      //  document.location.href = "/login";
+        //document.location.href = "/login";
     }
     return (
         <div style={{width:"800px" , margin:"0 auto"}}>

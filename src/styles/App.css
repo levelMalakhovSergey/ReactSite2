@@ -72,6 +72,10 @@
       padding: 0 15px;
 
   }
-
-
-  
+  .googleButton {
+      opacity: 0;
+      position: absolute;
+      width: 110px;
+      height: 25px;
+      cursor: pointer;
+  }

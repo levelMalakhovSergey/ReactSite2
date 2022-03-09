@@ -3,7 +3,7 @@ import { useState } from 'react';
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 const PostForm = ({create}) => {
-    const [post, setPost] = useState({title:"", description:""});
+    const [post, setPost] = useState({title:"", body:""});
  let isDisabled = {disabled:false};
   const addNewPost = (e) => {
     e.preventDefault()
@@ -38,10 +38,10 @@ const PostForm = ({create}) => {
               
               }
         <MyInput
-          value={post.description}
+          value={post.body}
           type="text"
           placeholder="Description"
-          onChange={(e) => setPost({...post, description:e.target.value})}>
+          onChange={(e) => setPost({...post, body:e.target.value})}>
 
           </MyInput>
         <MyButton {...isDisabled}  onClick={addNewPost}>Create post</MyButton>

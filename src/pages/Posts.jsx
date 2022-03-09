@@ -70,7 +70,7 @@ function Posts() {
         if(observer.current) observer.current.disconnect();
 
         let callback = function(entries, observer) {
-            if (entries[0].isIntersecting && page< 10) {
+            if (entries[0].isIntersecting && page< 11) {
                 console.log(entries)
 
                 setPage(page+1)
