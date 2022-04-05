@@ -34,24 +34,40 @@ function Posts() {
     const [isPostsLoading, setPostsLoading] = useState(false);
     const [totalCount, setTotalCount] = useState(0)
     const [limit, setLimit] = useState(10)
+    const [myLimit, setMyLimit] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(0)
     let pagesArray = getPagesArray(totalPages)
     const lastElement = useRef();
     const observer = useRef();
     const [fetchPosts, isLoading, postError] = useFetching(async () => {
         setPostsLoading(true)
-        let response = await PostService.getAll(limit, page)
-        setPosts([...posts, ...response.data])
-        setTotalCount(response.headers['x-total-count'])
-        setTotalPages(GetPagesCount(totalCount, limit))
+        if (localStorage.getItem('posts') && JSON.parse( localStorage.getItem('posts') ).length !==0)
+        {
+            let arrRez= JSON.parse(localStorage.getItem('posts')).filter(post => post.id>=myLimit && post.id<myLimit+limit)
+            setMyLimit(myLimit+limit)
+            console.log(arrRez)
+            setPosts([...posts, ...arrRez])
+        }
+        else {
+            localStorage.setItem('posts', JSON.stringify(await PostService.getAllData()))
+            let arrRez= JSON.parse(localStorage.getItem('posts')).filter(post => post.id>=myLimit && post.id<myLimit+limit)
+            setMyLimit(myLimit+limit)
+            console.log(arrRez)
+            setPosts([...posts, ...arrRez])
+        }
+       //  let response = await PostService.getAll(limit, page)//limit, page
+       //
+       //
+       //
+       // setTotalCount(response.headers['x-total-count'])
+       // setTotalPages(GetPagesCount(totalCount, limit))
         setPostsLoading(false)
     })
 
 
     // const SortedPosts = getSortedPosts();
     const SortedPosts = useMemo(() => {
-        console.log("function worked");
         if (filter.sort) {
             return [...posts].sort((a, b) =>
                 a[filter.sort].localeCompare(b[filter.sort])
@@ -81,17 +97,27 @@ function Posts() {
     }, [isLoading,isPostsLoading])
 
     useEffect(() => {
+
         fetchPosts()
+
     }, [page])
 
 
 
     const createPost = (newPost) => {
-        setPosts([...posts, newPost]);
+        //setPosts([...posts, newPost]);
+        let temp = JSON.parse(localStorage.getItem('posts'));
+        temp= [...temp, newPost]
+        console.log(temp)
+
+        localStorage.setItem('posts', JSON.stringify( temp))
+        console.log(JSON.parse(localStorage.getItem('posts')))
         setModal(false);
     };
     const removePost = (post) => {
         setPosts(posts.filter((p) => p.id !== post.id));
+       localStorage.setItem('posts', JSON.stringify( JSON.parse(localStorage.getItem('posts')).filter((p) => p.id !== post.id)))
+        console.log(JSON.parse(localStorage.getItem('posts')))
     };
 
     return (

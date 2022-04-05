@@ -3,6 +3,7 @@ import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import {AuthContext} from "../context";
 import {render} from "react-dom";
+import {useHistory} from "react-router-dom";
 
 
 
@@ -11,6 +12,7 @@ const Registration = () => {
     const [login,setLogin]= useState('')
     const [password,setPassword]= useState('')
     const {isAuth, setIsAuth, loginnedUsers, setUser } = useContext(AuthContext )
+    let history= useHistory();
     const  regUser =  event => {
         let temp= [...loginnedUsers, {login: login , password: password}];
         setUser(temp)
@@ -20,6 +22,7 @@ const Registration = () => {
         // localStorage.setItem('auth', 'true')
         console.log(loginnedUsers)
 
+        history.push('/')
         //document.location.href = "/login";
     }
     return (
