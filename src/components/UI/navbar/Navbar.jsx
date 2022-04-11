@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import MyButton from "../button/MyButton";
 import {AuthContext} from "../../../context";
 import MyuseLogoutHook from "../../hooks/MyuseLogoutHook";
@@ -7,12 +7,12 @@ import MyuseLogoutHook from "../../hooks/MyuseLogoutHook";
 
 const Navbar = () => {
     const {isAuth,setIsAuth} = useContext(AuthContext)
-
+    let history = useHistory()
     const logout = () => {
-
-        setIsAuth(false)
-        localStorage.removeItem('auth')
-        document.location.href = "/login";
+        // LOGAUT HAPPANING IN MYUSElOGAUTHOOK
+        // setIsAuth(false)
+        // localStorage.removeItem('auth')
+        // history.push('/login')
     }
     return (
         <div className="navbar">

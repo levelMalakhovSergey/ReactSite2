@@ -16,7 +16,7 @@ export default class PostService
             }
         })
 
-        return response
+        return response.data
    }
     static async getById( id)
     {
@@ -26,7 +26,7 @@ export default class PostService
     static async getCommById( id)
     {
         let response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments` )
-        console.log(response)
+
         return response
     }
 }

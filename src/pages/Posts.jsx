@@ -42,20 +42,29 @@ function Posts() {
     const observer = useRef();
     const [fetchPosts, isLoading, postError] = useFetching(async () => {
         setPostsLoading(true)
-        if (localStorage.getItem('posts') && JSON.parse( localStorage.getItem('posts') ).length !==0)
-        {
-            let arrRez= JSON.parse(localStorage.getItem('posts')).filter(post => post.id>=myLimit && post.id<myLimit+limit)
-            setMyLimit(myLimit+limit)
-            console.log(arrRez)
-            setPosts([...posts, ...arrRez])
-        }
-        else {
-            localStorage.setItem('posts', JSON.stringify(await PostService.getAllData()))
-            let arrRez= JSON.parse(localStorage.getItem('posts')).filter(post => post.id>=myLimit && post.id<myLimit+limit)
-            setMyLimit(myLimit+limit)
-            console.log(arrRez)
-            setPosts([...posts, ...arrRez])
-        }
+        let arrRez = await PostService.getAll(limit, page)
+
+        arrRez.forEach(post => {
+            post.img = 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200'
+            post.imgPrev = 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+        })
+        localStorage.setItem('posts',JSON.stringify([...posts,...arrRez]))
+        setPosts(JSON.parse(localStorage.getItem('posts')))
+
+        // if (localStorage.getItem('posts') && JSON.parse( localStorage.getItem('posts') ).length !==0)
+        // {
+        //     let arrRez= JSON.parse(localStorage.getItem('posts')).filter(post => post.id>=myLimit && post.id<myLimit+limit)
+        //     setMyLimit(myLimit+limit)
+        //     console.log(arrRez)
+        //     setPosts([...posts, ...arrRez])
+        // }
+        // else {
+        //     localStorage.setItem('posts', JSON.stringify(await PostService.getAllData()))
+        //     let arrRez= JSON.parse(localStorage.getItem('posts')).filter(post => post.id>=myLimit && post.id<myLimit+limit)
+        //     setMyLimit(myLimit+limit)
+        //     console.log(arrRez)
+        //     setPosts([...posts, ...arrRez])
+        // }
        //  let response = await PostService.getAll(limit, page)//limit, page
        //
        //
@@ -126,7 +135,6 @@ function Posts() {
                 Add Post
             </MyButton>
             <MyModal visible={modal} setVisible={setModal}>
-
                 <PostForm create={createPost}/>{" "}
             </MyModal>
 

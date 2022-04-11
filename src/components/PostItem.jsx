@@ -1,5 +1,7 @@
 import React from "react";
 import MyButton from "./UI/button/MyButton";
+import { Image } from 'antd';
+import '../styles/App.css'
 import {useHistory} from "react-router-dom";
 const PostItem = (props) => {
   const router = useHistory()
@@ -7,7 +9,12 @@ const PostItem = (props) => {
     <div>
       <div className="post">
         <div className="post__content">
-        
+          <Image width={50}
+                 height={50}
+                 src= {props.post.img}
+                 preview={{
+                   src: props.post.imgPrev
+                 }}/>
           <strong>{props.number}. {props.post.title}</strong>
           <div>{props.post.body}</div>
         </div>
