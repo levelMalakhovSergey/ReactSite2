@@ -16,8 +16,8 @@ const PostIdPage = () => {
     //     setPost(response.data)
     // })
     const [getPostByIdFromLS, isLoading, error] = useFetching(async () => {
-        let arr= JSON.parse(localStorage.getItem('posts'))
-        let rez= arr.filter(item => item.id == params.id)
+        let arr = JSON.parse(localStorage.getItem('posts'))
+        let rez = arr.filter(item => item.id == params.id)
         console.log(rez)
         setPost(rez[0])
     })
@@ -36,27 +36,15 @@ const PostIdPage = () => {
         <div style={{margin: " 0 auto"}}>
             <h1>You opened post with id = {params.id}</h1>
             <h1>{post.title}</h1>
-            {
-                isLoading
-                    ? <Loader/>
-                    : <div className='postIdItem'>
-                        <Image  width={200}
-                               height={200}
-                               src= {post.imgPrev}
-                              />
-                        <div>{post.id}. {post.body}</div>
-                        </div>
-            }
-            {/*<h1>You opened post with id = {params.id}</h1>*/}
-            {/*<Image width={50}*/}
-            {/*       height={50}*/}
-            {/*       src= {post.img}*/}
-            {/*       preview={{*/}
-            {/*           src: post.imgPrev*/}
-            {/*       }}/>*/}
-            {/*<h1>{post.title}</h1>*/}
-            {/*<div>{post.id}. {post.body}</div>*/}
+            <div className='postIdItem'>
 
+                <Image width={200}
+                       height={200}
+                       src={post.imgPrev}
+                />
+
+            </div>
+            <div>{post.id}. {post.body}</div>
             <h1>Comments</h1>
             {
                 isLoadingComm
